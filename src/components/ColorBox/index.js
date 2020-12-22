@@ -24,7 +24,6 @@ const ColorBox = () => {
         style={{backgroundColor: color}}
         onClick={handleClickColorBox}
         >
-        
     </div>);
 }
 
