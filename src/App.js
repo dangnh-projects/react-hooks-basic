@@ -8,6 +8,7 @@ import PostList from './components/PostList';
 import Pagination from './components/Pagination';
 import queryString from 'query-string';
 import PostFilterForm from './components/PostFilterForm';
+import Clock from './components/Clock';
 
 function App() {
   const [toDoList, setToDoList] = useState([
@@ -99,6 +100,8 @@ function App() {
     })
   }
 
+  const [hiddenClock, setHiddenClock] = useState(true);
+
   return (
     <div className="app">
       <h1>Welcome to Reactjs - PostList</h1>
@@ -106,9 +109,13 @@ function App() {
       {/* <ColorBox /> */}
       {/* <ToDoForm onSubmit={handleTodoFormSubmit} /> */}
       {/* <ToDoList toDoList={toDoList} toDoClick={handleToDoClick}/> */}
-      <PostList posts={postList} />
+
+      {/* <PostList posts={postList} />
       <Pagination pagination={pagination} onPageChange={handlePageChange} />
-      <PostFilterForm onSubmit={handleFilterChange} />
+      <PostFilterForm onSubmit={handleFilterChange} /> */}
+
+      {hiddenClock && <Clock />}
+      <button onClick={() => setHiddenClock(!hiddenClock)}>Hidden</button>
     </div>
   );
 }
