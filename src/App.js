@@ -5,6 +5,8 @@ import ColorBox from './components/ColorBox';
 import ToDoList from './components/ToDoList';
 import ToDoForm from './components/ToDoForm';
 import PostList from './components/PostList';
+import Pagination from './components/Pagination';
+import queryString from 'query-string';
 
 function App() {
   const [toDoList, setToDoList] = useState([
@@ -15,12 +17,23 @@ function App() {
   ])
 
   const [postList, setPostList] = useState([]);
+  const [pagination, setPagination] = useState({
+    _limit: 1,
+    _page: 1,
+    _totalRows: 1,
+  });
+  const [filters, setFilters] = useState({
+    _limit: 10,
+    _page: 1
+  })
 
   useEffect(() => {
     async function fetchPostList() {
       try {
+        // object to string
+        const paramsString = queryString.stringify(filters);
         // request url
-        const requestUrl = 'http://js-post-api.herokuapp.com/api/posts?_limit=10&page=1';
+        const requestUrl = `http://js-post-api.herokuapp.com/api/posts?${paramsString}`;
         const response = await fetch(requestUrl);
         const responseJson = await response.json();
 
@@ -31,6 +44,7 @@ function App() {
 
         // set value post list
         setPostList(data);
+        setPagination(pagination);
       } catch (error) {
         console.log('Fail to fetch post list: ', error.message);
       }
@@ -41,7 +55,15 @@ function App() {
     return () => {
       // ...
     }
-  }, []);
+  }, [filters]);
+
+  const handlePageChange = (newPage) => {
+    console.log('new page: ', newPage);
+    setFilters({
+      ...filters,
+      _page: newPage
+    })
+  }
 
   const handleToDoClick = (todo) => {
     console.log(todo);
@@ -74,6 +96,7 @@ function App() {
       {/* <ToDoForm onSubmit={handleTodoFormSubmit} /> */}
       {/* <ToDoList toDoList={toDoList} toDoClick={handleToDoClick}/> */}
       <PostList posts={postList} />
+      <Pagination pagination={pagination} onPageChange={handlePageChange} />
     </div>
   );
 }
