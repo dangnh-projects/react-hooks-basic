@@ -9,6 +9,8 @@ import Pagination from './components/Pagination';
 import queryString from 'query-string';
 import PostFilterForm from './components/PostFilterForm';
 import Clock from './components/Clock';
+import BetterClock from './components/BetterClock';
+import MagicColor from './components/MagicColor';
 
 function App() {
   const [toDoList, setToDoList] = useState([
@@ -114,8 +116,11 @@ function App() {
       <Pagination pagination={pagination} onPageChange={handlePageChange} />
       <PostFilterForm onSubmit={handleFilterChange} /> */}
 
-      {hiddenClock && <Clock />}
-      <button onClick={() => setHiddenClock(!hiddenClock)}>Hidden</button>
+      {/* {hiddenClock && <Clock />}
+      {hiddenClock && <BetterClock />}
+      <button onClick={() => setHiddenClock(!hiddenClock)}>Hidden</button> */}
+
+      <MagicColor />
     </div>
   );
 }
